@@ -97,6 +97,12 @@ class UiForm(QtWidgets.QWidget):
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
+        
+        # up to here is the UI display
+        # this part is the backend
+
+        self.submit.clicked.connect(self.ok_button) # connected the submit button to the ok_button func
+        self.cancel.clicked.connect(self.cancel_button) # connected the submit button to the cancel_button func
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
@@ -110,6 +116,30 @@ class UiForm(QtWidgets.QWidget):
         self.info.setText(_translate("Form", "(Gets saved into .idesktop as caption value.lnc)"))
         self.submit.setText(_translate("Form", "Submit"))
         self.cancel.setText(_translate("Form", "Cancel"))
+        
+    def ok_button(self):
+        """This button will take the input in the entries (lineEdits) and create a 
+        file that should be saved in .idesktop"""
+
+        self.caption = self.captionEdit.text() 
+        self.tooltip = self.toolTipEdit.text() 
+        self.command = self.commandEdit.text() 
+        self.icon = self.iconEdit.text()
+
+        print(self.caption)  # for now this only prints the information in the lineEdits
+        print(self.tooltip)  
+        print(self.command)  
+        print(self.icon)
+
+        # find the .idesktop directory
+        # navigate to that directory
+        # shutil.create(self.caption)
+
+
+    def cancel_button(self):
+        """exits the program"""
+        sys.exit()
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
