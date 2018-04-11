@@ -99,12 +99,12 @@ class UiForm(QtWidgets.QWidget):
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
-        
+
         # up to here is the UI display
         # this part is the backend
 
-        self.submit.clicked.connect(self.ok_button) # connected the submit button to the ok_button func
-        self.cancel.clicked.connect(self.cancel_button) # connected the submit button to the cancel_button func
+        self.submit.clicked.connect(self.ok_button)  # connected the submit button to the ok_button func
+        self.cancel.clicked.connect(self.cancel_button)  # connected the submit button to the cancel_button func
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
@@ -117,67 +117,68 @@ class UiForm(QtWidgets.QWidget):
         self.icon.setText(_translate("Form", "Icon:"))
         self.info.setText(_translate("Form", "(Gets saved into .idesktop as caption value.lnc)"))
         self.submit.setText(_translate("Form", "Submit"))
-        self.cancel.setText(_translate("Form", "Cancel"))
-        
+        self.cancel.setText(_translate("Form", "Quit"))
+
     def ok_button(self):
-        """This button will take the input in the entries (lineEdits) and create a 
+        """This button will take the input in the entries (lineEdits) and create a
         file that should be saved in .idesktop"""
 
-        self.caption = self.captionEdit.text() # this grabs the text in the lineEdits
-        self.tooltip = self.toolTipEdit.text() 
-        self.command = self.commandEdit.text() 
+        self.caption = self.captionEdit.text()  # this grabs the text in the lineEdits
+        self.tooltip = self.toolTipEdit.text()
+        self.command = self.commandEdit.text()
         self.icon = self.iconEdit.text()
-        
+
         from pathlib import Path
-        home = (str(Path.home())+"/.idesktop")
-       
-        #check if the file .idesktop exists, if it does append the edit lines and write to the the .idesktop dir
-        if(os.path.isdir(home)):
-        	#build up .lnk file and write it to .idesktop dir
-        	newFile = ()
-	        f = open(home+"/"+self.caption+'.lnk', 'w')
-	        f.write("table Icon\n  Caption: "+ self.caption)
-	        f.write("\n  ToolTip.Caption: "+ self.tooltip)
-	        f.write("\n  Icon: "+ self.icon)
-	        f.write("\n  Command: "+ self.command)
-	        f.write("\n  Width: 48 \n  Height: 48")
-	        f.write("\n  X: 100 \n  Y: 100")
-	        f.write("\nend")
-	        f.close
-	        #
-	        #this shouldn't just kill the app we need to retart the app
-	        # I can't remember how but we can research it
-	        #
-	        sys.exit()
+        home = (str(Path.home()) + "/.idesktop")
+
+        # check if the file .idesktop exists, if it does append the edit lines and write to the the .idesktop dir
+        if (os.path.isdir(home)):
+            # build up .lnk file and write it to .idesktop dir
+            newFile = ()
+            f = open(home + "/" + self.caption + '.lnk', 'w')
+            f.write("table Icon\n  Caption: " + self.caption)
+            f.write("\n  ToolTip.Caption: " + self.tooltip)
+            f.write("\n  Icon: " + self.icon)
+            f.write("\n  Command: " + self.command)
+            f.write("\n  Width: 48 \n  Height: 48")
+            f.write("\n  X: 100 \n  Y: 100")
+            f.write("\nend")
+            f.close
+            #
+            # this shouldn't just kill the app we need to retart the app
+            # I can't remember how but we can research it
+            #
+            self.close()
+            subprocess.call("python" + " idesk-gui.py", shell=True)
+
         else:
-        	#
-        	# it would be cool if this would appear in a notication box on the app
-        	#
-            print("File does not exist, Please create a .idesktop directory in home") # for now it prints this message but it should change the text of a label
+            #
+            # it would be cool if this would appear in a notication box on the app
+            #
+            print(
+                "File does not exist, Please create a .idesktop directory in home")  # for now it prints this message but it should change the text of a label
             sys.exit()
 
-        
         # create file in that directory
 
     def cancel_button(self):
         """exits the program"""
         sys.exit()
 
-        
-    # function no longer needed
-    #def find_idesktop_dir(self):
+        # function no longer needed
+        # def find_idesktop_dir(self):
         """this function will find the .idesktop directory. Only works on linux"""
-       # command = ["locate", ".idesktop"]
+    # command = ["locate", ".idesktop"]
 
-        #output = subprocess.Popen(command, stdout=subprocess.PIPE).communicate()[0]
-        #output = output.decode()
+    # output = subprocess.Popen(command, stdout=subprocess.PIPE).communicate()[0]
+    # output = output.decode()
 
-        #search_results = output.split('\n')
+    # search_results = output.split('\n')
 
-        #if search_results: 
-        #   return search_results[0]    
-        #else:
-        #   return None
+    # if search_results:
+    #   return search_results[0]
+    # else:
+    #   return None
 
 
 if __name__ == '__main__':
