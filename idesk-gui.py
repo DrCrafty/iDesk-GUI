@@ -10,6 +10,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication
 
 import sys
+import subprocess
+import os
 
 
 class UiForm(QtWidgets.QWidget):
@@ -121,7 +123,7 @@ class UiForm(QtWidgets.QWidget):
         """This button will take the input in the entries (lineEdits) and create a 
         file that should be saved in .idesktop"""
 
-        self.caption = self.captionEdit.text() 
+        self.caption = self.captionEdit.text() # this grabs the text in the lineEdits
         self.tooltip = self.toolTipEdit.text() 
         self.command = self.commandEdit.text() 
         self.icon = self.iconEdit.text()
@@ -132,13 +134,34 @@ class UiForm(QtWidgets.QWidget):
         print(self.icon)
 
         # find the .idesktop directory
+        print(self.find_idesktop_dir()) # for now this only prints the directory
+        ideskPATH = self.find_idesktop_dir()
+        
         # navigate to that directory
-        # shutil.create(self.caption)
-
+        if ideskPATH: # this checks if the idesktop directory exists
+            os.chdir(ideskPATH) 
+        else:
+            print("file does not exist") # for now it prints this message but it should change the text of a label
+        
+        # create file in that directory
 
     def cancel_button(self):
         """exits the program"""
         sys.exit()
+   
+    def find_idesktop_dir(self):
+        """this function will find the .idesktop directory. Only works on linux"""
+        command = ["locate", ".idesktop"]
+
+        output = subprocess.Popen(command, stdout=subprocess.PIPE).communicate()[0]
+        output = output.decode()
+
+        search_results = output.split('\n')
+
+        if search_results: 
+            return search_results[0]    
+        else:
+            return None
 
 
 if __name__ == '__main__':
