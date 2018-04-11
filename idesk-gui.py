@@ -13,9 +13,9 @@ import sys
 
 
 class UiForm(QtWidgets.QWidget):
-    def  __init__(self):
-         QtWidgets.QWidget.__init__(self)
-         self.setupUi(self)
+    def __init__(self):
+        QtWidgets.QWidget.__init__(self)
+        self.setupUi(self)
 
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -112,7 +112,7 @@ class UiForm(QtWidgets.QWidget):
         self.cancel.setText(_translate("Form", "Cancel"))
 
 if __name__ == '__main__':
-     app = QApplication(sys.argv)
-     ex = UiForm()
-     ex.show()
-     sys.exit(app.exec_())
+    app = QApplication(sys.argv)
+    ex = UiForm()
+    ex.show()
+    sys.exit(app.exec_())
