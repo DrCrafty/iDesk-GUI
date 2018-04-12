@@ -99,12 +99,12 @@ class UiForm(QtWidgets.QWidget):
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
-
+        
         # up to here is the UI display
         # this part is the backend
 
-        self.submit.clicked.connect(self.ok_button)  # connected the submit button to the ok_button func
-        self.cancel.clicked.connect(self.cancel_button)  # connected the submit button to the cancel_button func
+        self.submit.clicked.connect(self.ok_button) # connected the submit button to the ok_button func
+        self.cancel.clicked.connect(self.cancel_button) # connected the submit button to the cancel_button func
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
@@ -155,30 +155,28 @@ class UiForm(QtWidgets.QWidget):
             #
             # it would be cool if this would appear in a notication box on the app
             #
-            print(
-                "File does not exist, Please create a .idesktop directory in home")  # for now it prints this message but it should change the text of a label
+            print("File does not exist, Please create a .idesktop directory in home")
+            # for now it prints this message but it should change the text of a label
             sys.exit()
-
-        # create file in that directory
 
     def cancel_button(self):
         """exits the program"""
         sys.exit()
 
-        # function no longer needed
-        # def find_idesktop_dir(self):
+    # function no longer needed
+    # def find_idesktop_dir(self):
         """this function will find the .idesktop directory. Only works on linux"""
-    # command = ["locate", ".idesktop"]
+        # command = ["locate", ".idesktop"]
 
-    # output = subprocess.Popen(command, stdout=subprocess.PIPE).communicate()[0]
-    # output = output.decode()
+        # output = subprocess.Popen(command, stdout=subprocess.PIPE).communicate()[0]
+        # output = output.decode()
 
-    # search_results = output.split('\n')
+        # search_results = output.split('\n')
 
-    # if search_results:
-    #   return search_results[0]
-    # else:
-    #   return None
+        # if search_results:
+        #     return search_results[0]
+        # else:
+        #     return None
 
 
 if __name__ == '__main__':
